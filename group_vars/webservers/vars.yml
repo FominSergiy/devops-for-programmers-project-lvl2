@@ -1,0 +1,2 @@
+db_user: 'doadmin'
+db_password: "{{ db_pass }}"

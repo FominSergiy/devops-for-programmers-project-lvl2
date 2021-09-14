@@ -11,12 +11,35 @@
     - name: Install Docker Module for Python
       ansible.builtin.pip:
         name: docker
-    
+      
+    - name: Create Network for container
+      community.docker.docker_network:
+        name: redmine-network
+        state: present
+
+    - name: Run latest Postgre Image
+      community.docker.docker_container:
+        name: postgre-db
+        image: postgres
+        networks:
+          - name: redmine-network
+        restart_policy: always
+        restart: yes
+        env:
+          POSTGRES_USER: "{{ db_user }}"
+          POSTGRES_PASSWORD: "{{ db_password }}"
+   
     - name: Run Redmine container
       community.docker.docker_container:
         name: redmine-sqlLite
         image: redmine
+        networks:
+          - name: redmine-network
         published_ports:
          - 3000:3000
         restart_policy: always
         restart: yes
+        env:
+          REDMINE_DB_POSTGRES: 'postgre-db'
+          REDMINE_DB_USERNAME: "{{ db_user }}"
+          REDMINE_DB_PASSWORD: "{{ db_password }}"
