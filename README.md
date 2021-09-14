@@ -6,17 +6,36 @@
 - [Docker](https://www.docker.com/get-started) v20.10.7
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) v2.11.3
 - [Python](https://www.python.org/downloads/) v3.9.6
-- run `make install` to install required packages
+- run to install required packages
+
+```bash
+$ make install
+```
 
 # Prep the project
 
-> This deploys a simple container with `redmine` app to servers defined in `inventory.ini`
+> The `playbook.yml` deploys a `redmine` app container with a db container attached to it
+>
+> Logging is setup with Datadog
 
 1. Make sure you use your servers' ip addresses with an ssh key.
 2. Local test
-    - run `make run-local` - app should be available on `http://localhost:3000`
+    - app should be available on `http://localhost:3000`
+
+```bash
+$ make run-local-simple-version
+```
+
 3. Clean-up
-    - `docker contaiener ls`
-    - `docker container rm -f <CONTAINER-ID>`
+
+```bash
+$ docker contaiener ls
+$ docker container rm -f <CONTAINER-ID>
+```
+
 4. Deploy
-    - run `make deploy` to deploy this app to your servers
+    - run to deploy
+
+```bash
+$ make deploy
+```

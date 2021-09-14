@@ -1,3 +1,4 @@
 db_user: 'doadmin'
+# vars below are taken from encrypted files
 db_password: "{{ db_pass }}"
 data_dog_api_key: "{{ api_key }}"

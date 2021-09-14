@@ -26,6 +26,7 @@
       ansible.builtin.pip:
         name: docker
       
+    # redmine and postgre require a network to be created first
     - name: Create Network for container
       community.docker.docker_network:
         name: redmine-network
@@ -43,6 +44,7 @@
           POSTGRES_USER: "{{ db_user }}"
           POSTGRES_PASSWORD: "{{ db_password }}"
    
+    # attach redmine container to the db container created above
     - name: Run Redmine container
       community.docker.docker_container:
         name: redmine-sqlLite
