@@ -29,8 +29,14 @@ $ make run-local-simple-version
 3. Clean-up
 
 ```bash
-$ docker contaiener ls
-$ docker container rm -f <CONTAINER-ID>
+$ docker container ls
+
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+790f2bbf2fa4   redmine   "/docker-entrypoint.…"   41 seconds ago   Up 40 seconds   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   sweet_bouman
+```
+
+```bash
+$ docker container rm -f <YOUR-CONTAINER-ID>
 ```
 
 4. Deploy
