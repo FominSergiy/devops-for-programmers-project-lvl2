@@ -2,6 +2,8 @@
   gather_facts: yes
   remote_user: root
 
+  # block below is used to set up http healthcheck with datadog
+  # https://docs.datadoghq.com/integrations/http_check/
   roles:
     - { role: datadog.datadog, become: yes }
   vars:
@@ -12,7 +14,7 @@
         init_config:
         instances:
           - name: Http Health Check for Redmine
-            url: http://{{ ansible_facts['default_ipv4']['address'] }}:3000
+            url: http://{{ ansible_default_ipv4.address }}:3000
             timeout: 5
             method: GET
 
