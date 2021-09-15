@@ -60,7 +60,11 @@
           REDMINE_DB_POSTGRES: 'postgre-db'
           REDMINE_DB_USERNAME: "{{ db_user }}"
           REDMINE_DB_PASSWORD: "{{ db_password }}"
-    
+
+- hosts: webservers
+  gather_facts: yes
+  remote_user: root
+  tasks:
     - name: Run Datadog
       include_role:
         name: datadog.datadog
