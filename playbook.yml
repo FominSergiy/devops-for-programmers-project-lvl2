@@ -1,4 +1,4 @@
-- hosts: all # Хосты для которых выполняется ansible
+- hosts: all
   gather_facts: yes
   remote_user: root
 
@@ -15,7 +15,6 @@
             url: http://{{ ansible_facts['default_ipv4']['address'] }}:3000
             timeout: 5
             method: GET
-    datadog_enabled: false
 
   tasks:      
     - name: Install packages for
@@ -61,8 +60,9 @@
           REDMINE_DB_USERNAME: "{{ db_user }}"
           REDMINE_DB_PASSWORD: "{{ db_password }}"
 
+# run Datadog on webservers group only
 - hosts: webservers
-  gather_facts: yes
+  gather_facts: no
   remote_user: root
   tasks:
     - name: Run Datadog
