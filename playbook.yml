@@ -4,8 +4,6 @@
 
   # block below is used to set up http healthcheck with datadog
   # https://docs.datadoghq.com/integrations/http_check/
-  roles:
-    - name: datadog.datadog
   vars:
     datadog_api_key: "{{ data_dog_api_key }}"
     datadog_site: "datadoghq.com"
@@ -17,6 +15,7 @@
             url: http://{{ ansible_facts['default_ipv4']['address'] }}:3000
             timeout: 5
             method: GET
+    datadog_enabled: false
 
   tasks:      
     - name: Install packages for
@@ -61,3 +60,9 @@
           REDMINE_DB_POSTGRES: 'postgre-db'
           REDMINE_DB_USERNAME: "{{ db_user }}"
           REDMINE_DB_PASSWORD: "{{ db_password }}"
+    
+    - name: Run Datadog
+      include_role:
+        name: datadog.datadog
+        apply:
+          become: yes
