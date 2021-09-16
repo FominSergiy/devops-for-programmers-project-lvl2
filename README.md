@@ -12,7 +12,7 @@
 $ make install
 ```
 
-I am using DigitalOcean to host my servers. Keep in mind that **vm image has docker installed in it**.
+I am using DigitalOcean to host my servers. For your vm **make sure you use image with Docker installed, or install it yourself**.
 - [digitalOcean](https://www.digitalocean.com/)
 - [vm-image](https://marketplace.digitalocean.com/apps/docker)
 
