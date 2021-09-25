@@ -18,31 +18,13 @@ I am using DigitalOcean to host my servers. For your vm **make sure you use imag
 
 # Prep the project
 
-> The `playbook.yml` deploys a `redmine` app container with a db container attached to it
+> The `playbook.yml` deploys a `redmine` app that connects to already existing postgre db
 >
-> Logging is setup with Datadog
+> Logging is setup with Datadog.
 
 1. Make sure you use your servers' ip addresses with an ssh key.
-2. Local test
-    - app should be available on `http://localhost:3000`
-
-```bash
-$ make run-local-simple-version
-```
-
-3. Clean-up
-
-```bash
-$ docker container ls
-
-CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-790f2bbf2fa4   redmine   "/docker-entrypoint.…"   41 seconds ago   Up 40 seconds   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   sweet_bouman
-```
-
-```bash
-$ docker container rm -f <YOUR-CONTAINER-ID>
-```
-
+2. This deployment assumes you already have a **Postgre** db setup.
+3. Update env_vars with values that relate to your deployment
 4. Deploy
     - run to deploy
 

@@ -1,4 +1,25 @@
-db_user: 'doadmin'
-# vars below are taken from encrypted files
-db_password: "{{ db_pass }}"
+redmine_db_postgres: "example-postgres-cluster-do-user-9605845-0.b.db.ondigitalocean.com"
+redmine_db_port: "25060"
+redmine_db_database: "defaultdb"
+redmine_db_username: "doadmin"
+redmine_db_password: "{{ db_pass }}"
+
+env_vars:
+  REDMINE_DB_POSTGRES: "{{ redmine_db_postgres }}"
+  REDMINE_DB_PORT:  "{{ redmine_db_port }}"
+  REDMINE_DB_DATABASE: "{{ redmine_db_database }}"
+  REDMINE_DB_USERNAME: "{{ redmine_db_username }}"
+  REDMINE_DB_PASSWORD: "{{ redmine_db_password }}"
+
+
 data_dog_api_key: "{{ api_key }}"
+datadog_site: "datadoghq.com"
+
+datadog_checks:
+  http_check:
+    init_config:
+    instances:
+      - name: Http Health Check for Redmine
+        url: "http://{{ ansible_facts['default_ipv4']['address'] }}:3000"
+        timeout: 5
+        method: GET

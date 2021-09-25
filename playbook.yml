@@ -1,8 +1,8 @@
-- hosts: all
+- name: Deploy redmine app to hosts
+  hosts: all
   gather_facts: yes
-  remote_user: root
 
-  tasks:      
+  tasks:
     - name: Install pip package manager to get python modules
       ansible.builtin.apt:
         name: python3-pip
@@ -11,63 +11,20 @@
     - name: Install Docker Module for Python
       ansible.builtin.pip:
         name: docker
-      
-    # redmine and postgre require a network to be created first
-    - name: Create Network for container
-      community.docker.docker_network:
-        name: redmine-network
-        state: present
 
-    - name: Run latest Postgre Image
+    - name: Run Redmine container and connect it to an existing db
       community.docker.docker_container:
-        name: postgre-db
-        image: postgres
-        networks:
-          - name: redmine-network
-        restart_policy: always
-        restart: yes
-        env:
-          POSTGRES_USER: "{{ db_user }}"
-          POSTGRES_PASSWORD: "{{ db_password }}"
-   
-    # attach redmine container to the db container created above
-    - name: Run Redmine container
-      community.docker.docker_container:
-        name: redmine-sqlLite
+        name: redmine-postgre
         image: redmine
-        networks:
-          - name: redmine-network
         published_ports:
          - 3000:3000
         restart_policy: always
         restart: yes
-        env:
-          REDMINE_DB_POSTGRES: 'postgre-db'
-          REDMINE_DB_USERNAME: "{{ db_user }}"
-          REDMINE_DB_PASSWORD: "{{ db_password }}"
+        env: "{{ env_vars }}"
 
-# run Datadog on webservers group only
-- hosts: webservers
+- name: Setup Datagog health checks on webservers
+  hosts: webservers
   gather_facts: no
   remote_user: root
-
-  # block below is used to set up http healthcheck with datadog
-  # https://docs.datadoghq.com/integrations/http_check/
-  vars:
-    datadog_api_key: "{{ data_dog_api_key }}"
-    datadog_site: "datadoghq.com"
-    datadog_checks:
-      http_check:
-        init_config:
-        instances:
-          - name: Http Health Check for Redmine
-            url: http://{{ ansible_facts['default_ipv4']['address'] }}:3000
-            timeout: 5
-            method: GET
-            
-  tasks:
-    - name: Run Datadog
-      include_role:
-        name: datadog.datadog
-        apply:
-          become: yes
+  roles:
+    - { role: datadog.datadog, become: yes }
