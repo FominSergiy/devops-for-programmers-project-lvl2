@@ -14,7 +14,7 @@
 
     - name: Run Redmine container and connect it to an existing db
       community.docker.docker_container:
-        name: redmine-postgre
+        name: redmine
         image: redmine
         published_ports:
          - 3000:3000
