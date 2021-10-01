@@ -12,7 +12,7 @@
       ansible.builtin.pip:
         name: docker
 
-    - name: Parse Jinja2 template to create .env file on remote host
+    - name: Parse Jinja2 template to create .env file on remote host to be used in redmine container
       template:
         src: 'environment.j2'
         dest: '.env'
