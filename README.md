@@ -25,14 +25,17 @@ I am using DigitalOcean to host my servers. For your vm **make sure you use imag
 1. Create `vault_password` file which will contain a secret you will use to ecrypt/decrypt your secrets.
 Make sure you use the exact name of the file above (otherwise update `.gitignore`)
 
-    ```bash
-    $ touch vault_password
-    ```
-2. Make sure you use your servers' ip addresses with an ssh key.
-3. This deployment assumes you already have a **Postgre** db setup.
-4. Update env_vars with values that relate to your deployment
-5. Deploy
-    - run to deploy
+```bash
+$ touch vault_password
+```
+
+2. clean up `vault.yml` file and insert your db password in the file `vault_redmine_db_password : 'your-password'`.
+Run `$ make encrypt` to encrypt the file.
+
+3. Make sure you use your servers' ip addresses with an ssh key.
+4. This deployment assumes you already have a **Postgre** db setup.
+5. Update env_vars with values that relate to your deployment
+6. Deploy the app
 
 ```bash
 $ make deploy

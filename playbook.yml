@@ -12,6 +12,12 @@
       ansible.builtin.pip:
         name: docker
 
+    - name: Parse Jinja2 template to create .env file on remote host
+      template:
+        src: 'environment.j2'
+        dest: '.env'
+        mode: 0664
+
     - name: Run Redmine container and connect it to an existing db
       community.docker.docker_container:
         name: redmine
@@ -20,11 +26,10 @@
          - 3000:3000
         restart_policy: always
         restart: yes
-      environment: "{{ env_vars }}"
+        env_file: '.env'
 
 - name: Setup Datagog health checks on webservers
   hosts: webservers
   gather_facts: no
-  remote_user: root
   roles:
     - { role: datadog.datadog, become: yes }

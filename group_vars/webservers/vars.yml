@@ -2,15 +2,7 @@ redmine_db_postgres: "example-postgres-cluster-do-user-9605845-0.b.db.ondigitalo
 redmine_db_port: "25060"
 redmine_db_database: "defaultdb"
 redmine_db_username: "doadmin"
-redmine_db_password: "{{ vault_db_password }}"
-
-env_vars:
-  REDMINE_DB_POSTGRES: "{{ redmine_db_postgres }}"
-  REDMINE_DB_PORT:  "{{ redmine_db_port }}"
-  REDMINE_DB_DATABASE: "{{ redmine_db_database }}"
-  REDMINE_DB_USERNAME: "{{ redmine_db_username }}"
-  REDMINE_DB_PASSWORD: "{{ redmine_db_password }}"
-
+redmine_db_password: "{{ vault_redmine_db_password }}"
 
 data_dog_api_key: "{{ api_key }}"
 datadog_site: "datadoghq.com"
