@@ -4,7 +4,7 @@ redmine_db_database: "defaultdb"
 redmine_db_username: "doadmin"
 redmine_db_password: "{{ vault_redmine_db_password }}"
 
-data_dog_api_key: "{{ api_key }}"
+data_dog_api_key: "{{ vault_datadog_api_key }}"
 datadog_site: "datadoghq.com"
 
 datadog_checks:
